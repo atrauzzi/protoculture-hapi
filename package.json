@@ -1,0 +1,35 @@
+{
+  "name": "protoculture-hapi",
+  "author": "Alexander Trauzzi <atrauzzi@gmail.com>",
+  "version": "0.0.0-development",
+  "license": "Apache-2.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atrauzzi/protoculture-hapi.git"
+  },
+  "keywords": [
+    "typescript",
+    "dependency-injection",
+    "inversify",
+    "hapi",
+    "protoculture"
+  ],
+  "bugs": {
+    "url": "https://github.com/atrauzzi/protoculture-hapi/issues"
+  },
+  "homepage": "https://github.com/atrauzzi/protoculture-hapi#readme",
+  "devDependencies": {
+    "semantic-release": "^6.3.2"
+  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "dependencies": {
+    "@types/hapi": "^16.0.4",
+    "hapi": "^16.1.1",
+    "protoculture": "^2.0.25"
+  }
+}
