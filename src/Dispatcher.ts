@@ -66,7 +66,7 @@ export class Dispatcher {
     }
 
     protected error(error: any, request: Hapi.Request, reply: Hapi.IReply, route: Route) {
-console.log("something errorful happened", error);
+
         if(_.isError(error)) {
 
             const {name, message, stack} = error;

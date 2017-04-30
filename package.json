@@ -29,7 +29,9 @@
   "types": "./lib/index.d.ts",
   "dependencies": {
     "@types/hapi": "^16.0.4",
+    "@types/moment": "^2.13.0",
     "hapi": "^16.1.1",
+    "moment": "^2.18.1",
     "protoculture": "^2.0.25"
   }
 }
