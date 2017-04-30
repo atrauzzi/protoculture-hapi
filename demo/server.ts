@@ -3,6 +3,7 @@ import { ServiceProvider, StaticServiceProvider, BaseApp, Suite, ConsoleServiceP
 import { HapiServiceProvider, Route } from "../src/index";
 import * as Hapi from "hapi";
 
+
 const hapiDemoSymbols = {
     HelloController: Symbol("hello"),
 }

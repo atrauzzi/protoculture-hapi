@@ -22,5 +22,4 @@ RUN npm install -g typescript
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-WORKDIR /protoculture
-EXPOSE 4000
+WORKDIR /protoculture-hapi

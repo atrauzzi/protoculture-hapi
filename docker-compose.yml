@@ -4,7 +4,7 @@ services:
 
   cli:
     build: .
-    container_name: protoculture-cli
+    container_name: protoculture-hapi-cli
 
     volumes:
-      - "./:/protoculture"
+      - "./:/protoculture-hapi"

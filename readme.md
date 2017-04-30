@@ -13,11 +13,14 @@ Hapi offers a great server-side HTTP abstraction with a broad ecosystem of plugi
 community maintained typing definitions, hapi seems like a sure bet!
 
 Most of what this library offers sits on top of hapi and as such, I make every effort to ensure the standard hapi documentation continues to 
-apply.  Hapi contains a lot of abstractions already, so where possible, protoculture-hapi integrates, but everywhere else, it stays out of the way.
+apply.  Hapi offers a lot already, so where possible, protoculture-hapi integrates - but everywhere else, it stays out of the way.
 
 #### Dependency Injection
 Like many pure JS libraries, hapi does not natively feature any kind of dependency injection.  The nice thing is that hapi is so well factored, 
 setting up dependency injection is straightforward.
+
+All you have to do is bind routes and define handlers either as the regular hapi route structure, or using `Route` instances which is where the real
+magic happens.
 
 #### Async
 Because hapi is callback based, it's easy for protoculture-hapi to bootstrap asynchronous request handlers.  That means all your handlers 
