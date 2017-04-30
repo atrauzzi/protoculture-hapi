@@ -39,8 +39,6 @@ export class HapiApp implements App {
         this.server.on("request", (request: Hapi.Request, event: Event) => this.logRequest(request, event));
         this.server.on("response", (request: Hapi.Request) => this.logResponse(request));
 
-        // ToDo: Tap all the hapi logging events and feed them back up through protoculture.
-
         this.server.start();
     }
 
