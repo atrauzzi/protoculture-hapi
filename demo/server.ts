@@ -31,11 +31,12 @@ class HapiDemoServiceProvider extends HapiServiceProvider {
 
         // Routes obviously don't have to be inline, they can come from other modules still!
         this.bindRoutes([
+            // Static routes, for when you just can't get enough.
             {
                 directory: "./demo/public",
             },
+            // Action routes!  These are routes that resolve their handler via the IoC!
             {
-                // Standard hapi route configuration still in play!
                 path: "/say-hello",
                 method: "GET",
                 // Can be a function or a class
@@ -43,6 +44,7 @@ class HapiDemoServiceProvider extends HapiServiceProvider {
                 // If a class is used, the method to invoke
                 actionMethod: "sayHello",
             },
+            // Single files can be served too.
             {
                 method: "GET",
                 path: "/protoculture.png",
