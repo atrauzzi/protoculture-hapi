@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { ServiceProvider, StaticServiceProvider, BaseApp, Suite, ConsoleServiceProvider } from "protoculture";
-import { HapiServiceProvider, Route } from "../src/index";
+import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../src/index";
 import * as Hapi from "hapi";
 
 
@@ -13,7 +13,7 @@ export class HelloController {
     // Controllers can be async now!
     public async sayHello(request: Hapi.Request, reply: Hapi.IReply, route: Route) {
 
-        reply("Hello!");
+        reply("Yes sir I like it!");
     }
 }
 
@@ -32,13 +32,21 @@ class HapiDemoServiceProvider extends HapiServiceProvider {
         // Routes obviously don't have to be inline, they can come from other modules still!
         this.bindRoutes([
             {
+                directory: "./demo/public",
+            },
+            {
                 // Standard hapi route configuration still in play!
-                path: "/",
+                path: "/say-hello",
                 method: "GET",
                 // Can be a function or a class
                 actionSymbol: hapiDemoSymbols.HelloController,
                 // If a class is used, the method to invoke
                 actionMethod: "sayHello",
+            },
+            {
+                method: "GET",
+                path: "/protoculture.png",
+                file: "protoculture.png",
             }
         ]);
 
@@ -55,6 +63,7 @@ class HapiDemoSuite extends Suite {
     protected get serviceProviders(): StaticServiceProvider<any>[] {
 
         return [
+            InertServiceProvider,
             HapiDemoServiceProvider,
             ConsoleServiceProvider,
         ];

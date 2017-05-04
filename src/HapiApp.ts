@@ -28,16 +28,16 @@ export class HapiApp implements App {
     ) {
 
         this.dispatcher = new Dispatcher(this, this.server);
-    }
-
-    public async run(): Promise<void> {
-        
-        this.dispatcher.registerRoutes(this.routes);
 
         this.server.on("log", (request: Hapi.Request, event: Event) => this.log(event, LogLevel.Info));
         this.server.on("request-error", (request: Hapi.Request, error: Error) => this.logError(request, error));
         this.server.on("request", (request: Hapi.Request, event: Event) => this.logRequest(request, event));
         this.server.on("response", (request: Hapi.Request) => this.logResponse(request));
+    }
+
+    public async run(): Promise<void> {
+        
+        this.dispatcher.registerRoutes(this.routes);
 
         this.server.start();
     }

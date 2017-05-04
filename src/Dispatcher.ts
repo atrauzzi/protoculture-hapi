@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
 import { Suite, App, LogLevel } from "protoculture";
-import { Route } from "./Route";
+import { Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
 import { Handler } from "./Handler";
 
 
@@ -23,7 +23,15 @@ export class Dispatcher {
 
         if(_.has(route, "actionSymbol")) {
 
-            this.registerProtocultureRoute(route as Route);
+            this.registerActionRoute(route as ActionRoute);
+        }
+        else if(_.has(route, "directory")) {
+
+            this.registerDirectoryRoute(route as DirectoryRoute);
+        }
+        else if(_.has(route, "file")) {
+            
+            this.registerFileRoute(route as FileRoute);
         }
         else {
 
@@ -31,11 +39,11 @@ export class Dispatcher {
         }
     }
 
-    protected registerProtocultureRoute(route: Route) {
+    protected registerActionRoute(route: ActionRoute) {
 
         // Note: Apparently you can't use fat arrow functions for handlers in hapi.
         const dispatcher = this;
-        const handler = function (request: Hapi.Request, reply: Hapi.IReply) {
+        const actionHandler = function (request: Hapi.Request, reply: Hapi.IReply) {
 
             dispatcher
                 .dispatch(request, reply, route)
@@ -45,7 +53,33 @@ export class Dispatcher {
         this.registerHapiRoute({
             path: route.path,
             method: route.method || "GET",
-            handler: handler,
+            // Note: Keeping this closure as lightweight as possible.
+            handler: actionHandler,
+        });
+    }
+
+    protected registerDirectoryRoute(route: DirectoryRoute) {
+
+        this.registerHapiRoute({
+            method: route.method || "GET",
+            path: route.path || "/{path*}",
+            handler: {
+                directory: {
+                    path: route.directory,
+                    index: true,
+                },
+            },
+        });
+    }
+
+    protected registerFileRoute(route: FileRoute) {
+
+        this.registerHapiRoute({
+            method: route.method || "GET",
+            path: route.path || "/{path*}",
+            handler: {
+                file: route.file,
+            },
         });
     }
 
@@ -55,7 +89,7 @@ export class Dispatcher {
     }
 
     // Note: This is the root async context.
-    protected async dispatch(request: Hapi.Request, reply: Hapi.IReply, route: Route) {
+    protected async dispatch(request: Hapi.Request, reply: Hapi.IReply, route: ActionRoute) {
         
         const childContainer = await this.app.suite.bootChild();
 

@@ -1,5 +1,6 @@
 export { HapiServiceProvider } from "./HapiServiceProvider";
-export { Route } from "./Route";
+export { InertServiceProvider } from "./InertServiceProvider";
+export { RouteType, Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
 export { Handler } from "./Handler";
 
 export const hapiSymbols = {
@@ -7,4 +8,5 @@ export const hapiSymbols = {
     ServerConnectionOptions: Symbol("ServerConnectionOptions"),
     Server: Symbol("Server"),
     Route: Symbol("Route"),
+    Plugin: Symbol("Plugin"),
 };

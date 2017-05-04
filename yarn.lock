@@ -35,11 +35,17 @@
     conventional-changelog "0.0.17"
     github-url-from-git "^1.4.0"
 
-"@types/hapi@^16.0.4":
+"@types/hapi@*", "@types/hapi@^16.0.4":
   version "16.0.4"
   resolved "https://registry.yarnpkg.com/@types/hapi/-/hapi-16.0.4.tgz#70dcc7c2f90f164b3bb29809e84e8eaa38855575"
   dependencies:
     "@types/node" "*"
+
+"@types/inert@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@types/inert/-/inert-4.2.0.tgz#07f7fe89a22d1f17e2ea8891bb1c912db7b54c8e"
+  dependencies:
+    "@types/hapi" "*"
 
 "@types/lodash@^4.14.61":
   version "4.14.63"
@@ -695,6 +701,17 @@ indent-string@^2.1.0:
   dependencies:
     repeating "^2.0.0"
 
+inert@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/inert/-/inert-4.2.0.tgz#6aa5da8ce19982eb72aabef4bdda64fd6750b005"
+  dependencies:
+    ammo "2.x.x"
+    boom "4.x.x"
+    hoek "4.x.x"
+    items "2.x.x"
+    joi "10.x.x"
+    lru-cache "4.0.x"
+
 inherits@^2.0.3, inherits@~2.0.0, inherits@~2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
@@ -948,6 +965,13 @@ loud-rejection@^1.0.0:
   dependencies:
     currently-unhandled "^0.4.1"
     signal-exit "^3.0.0"
+
+lru-cache@4.0.x:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.0.2.tgz#1d17679c069cda5d040991a09dbc2c0db377e55e"
+  dependencies:
+    pseudomap "^1.0.1"
+    yallist "^2.0.0"
 
 make-error@^1.1.1:
   version "1.2.3"
@@ -1272,6 +1296,10 @@ protoculture@^2.0.25:
     typescript "^2.2.2"
     urlsearchparams "^0.1.1"
     whatwg-fetch "^1.1.0"
+
+pseudomap@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
 punycode@^1.4.1:
   version "1.4.1"
@@ -1816,6 +1844,10 @@ wreck@10.x.x:
 xtend@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+
+yallist@^2.0.0:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
 
 yn@^1.2.0:
   version "1.2.0"

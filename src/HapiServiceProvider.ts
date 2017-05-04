@@ -3,7 +3,7 @@ import * as Hapi from "hapi";
 import { hapiSymbols } from "./index";
 import { interfaces } from "inversify";
 import { ServiceProvider } from "protoculture";
-import { StaticRoute, Route } from "./Route";
+import { RouteType } from "./Route";
 import { Dispatcher } from "./Dispatcher";
 import { HapiApp } from "./HapiApp";
 
@@ -15,21 +15,9 @@ export class HapiServiceProvider extends ServiceProvider {
         this.suite.container.bind(hapiSymbols.Server)
             .toDynamicValue((context) => {
                 
-                let server: Hapi.Server;
-
-                try {
-                    
-                    const configuration = context.container.get<Hapi.IServerOptions>(hapiSymbols.ServerOptions);                    
-                    server = new Hapi.Server(configuration);
-                }
-                catch(error) {
-
-                    server = new Hapi.Server();
-                }
-
-                const connections = context.container.getAll<Hapi.IServerConnectionOptions>(hapiSymbols.ServerConnectionOptions);
-                
-                _.each(connections, (connection) => server.connection(connection));
+                const server = this.createServer(context);
+                this.configurePlugins(server, context);
+                this.configureConnections(server, context);
 
                 return server;
             })
@@ -40,14 +28,12 @@ export class HapiServiceProvider extends ServiceProvider {
         this.bindConstructorParameter([hapiSymbols.Route], HapiApp, 1);
     }
 
-    protected bindRoutes(routes: Route[]) {
+    protected bindRoutes(routes: RouteType[]) {
 
         _.each(routes, (route) => this.bindRoute(route));
     }
 
-    protected bindRoute(route: Route) {
-
-        //this.makeInjectable(route);
+    protected bindRoute(route: RouteType) {
 
         this.suite.container.bind(hapiSymbols.Route)
             .toConstantValue(route);
@@ -57,5 +43,47 @@ export class HapiServiceProvider extends ServiceProvider {
 
         this.suite.container.bind(hapiSymbols.ServerConnectionOptions)
             .toConstantValue(connection);
+    }
+
+    private createServer(context: interfaces.Context) {
+
+        const configurationOptions: Hapi.IServerOptions = {
+            connections: {
+                router: {
+                    stripTrailingSlash: true,
+                    isCaseSensitive: true,
+                }
+            }
+        };
+
+        try {
+            
+            const configuredOptions = context.container.get<Hapi.IServerOptions>(hapiSymbols.ServerOptions);
+            _.assign(configurationOptions, configuredOptions);
+        }
+        catch(error) {
+
+        }
+
+        return new Hapi.Server(configurationOptions);
+    }
+
+    private configureConnections(server: Hapi.Server, context: interfaces.Context) {
+
+        const connections = context.container.getAll<Hapi.IServerConnectionOptions>(hapiSymbols.ServerConnectionOptions);
+        
+        _.each(connections, (connection) => server.connection(connection));
+    }
+
+    private configurePlugins(server: Hapi.Server, context: interfaces.Context) {
+
+        try {
+            
+            const plugins = context.container.getAll<any>(hapiSymbols.Plugin);
+            _.each(plugins, (plugin) => server.register(plugin))
+        }
+        catch(error) {
+
+        }
     }
 }
