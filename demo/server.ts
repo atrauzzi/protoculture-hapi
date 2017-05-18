@@ -1,7 +1,8 @@
 #!/usr/bin/env ts-node
+import * as Hapi from "hapi";
+import "../src/Extensions";
 import { ServiceProvider, StaticServiceProvider, BaseApp, Suite, ConsoleServiceProvider } from "protoculture";
 import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../src/index";
-import * as Hapi from "hapi";
 
 
 const hapiDemoSymbols = {
@@ -11,26 +12,29 @@ const hapiDemoSymbols = {
 export class HelloController {
     
     // Controllers can be async now!
-    public async sayHello(request: Hapi.Request, reply: Hapi.IReply, route: Route) {
+    public async sayHello(request: Hapi.Request, reply: Hapi.Base_Reply, route: Route) {
 
         reply("Yes sir I like it!");
     }
 }
 
-class HapiDemoServiceProvider extends HapiServiceProvider {
+class HapiDemoServiceProvider extends ServiceProvider {
 
     public async boot() {
 
-        this.bindConnection({
-            host: "0.0.0.0",
-            port: 2112,
+        this.configureConnection(() => {
+            
+            return {
+                host: "0.0.0.0",
+                port: 2112,
+            };
         });
 
         this.makeInjectable(HelloController);
         this.bindConstructor(hapiDemoSymbols.HelloController, HelloController);
 
         // Routes obviously don't have to be inline, they can come from other modules still!
-        this.bindRoutes([
+        this.configureRoutes([
             // Static routes, for when you just can't get enough.
             {
                 directory: "./demo/public",
@@ -65,9 +69,10 @@ class HapiDemoSuite extends Suite {
     protected get serviceProviders(): StaticServiceProvider<any>[] {
 
         return [
+            ConsoleServiceProvider,
+            HapiServiceProvider,
             InertServiceProvider,
             HapiDemoServiceProvider,
-            ConsoleServiceProvider,
         ];
     }
 }
@@ -75,4 +80,4 @@ class HapiDemoSuite extends Suite {
 //
 // And this is how we start it!
 const suite = new HapiDemoSuite();
-suite.run().catch(console.error);
+suite.run().catch((error) => console.error(error));

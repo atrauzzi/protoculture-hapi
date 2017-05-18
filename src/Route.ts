@@ -6,7 +6,7 @@ export type RouteType =
     | ActionRoute 
     | DirectoryRoute 
     | FileRoute 
-    | Hapi.IRouteConfiguration
+    | Hapi.RouteConfiguration
 ;
 
 export interface StaticRoute<RouteType extends Route> {
@@ -16,7 +16,7 @@ export interface StaticRoute<RouteType extends Route> {
 
 export interface Route {
 
-    method?: string;
+    method?: Hapi.HTTP_METHODS_PARTIAL;
 }
 
 export interface ActionRoute extends Route {

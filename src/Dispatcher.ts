@@ -19,7 +19,7 @@ export class Dispatcher {
         _.each(routes, (route) => this.registerRoute(route));
     }
 
-    public registerRoute(route: Route | Hapi.IRouteConfiguration) {
+    public registerRoute(route: Route | Hapi.RouteConfiguration) {
 
         if(_.has(route, "actionSymbol")) {
 
@@ -35,7 +35,7 @@ export class Dispatcher {
         }
         else {
 
-            this.registerHapiRoute(route as Hapi.IRouteConfiguration);
+            this.registerHapiRoute(route as Hapi.RouteConfiguration);
         }
     }
 
@@ -43,7 +43,7 @@ export class Dispatcher {
 
         // Note: Apparently you can't use fat arrow functions for handlers in hapi.
         const dispatcher = this;
-        const actionHandler = function (request: Hapi.Request, reply: Hapi.IReply) {
+        const actionHandler = function (request: Hapi.Request, reply: Hapi.Base_Reply) {
 
             dispatcher
                 .dispatch(request, reply, route)
@@ -83,13 +83,13 @@ export class Dispatcher {
         });
     }
 
-    protected registerHapiRoute(route: Hapi.IRouteConfiguration) {
+    protected registerHapiRoute(route: Hapi.RouteConfiguration) {
 
         this.server.route(route);
     }
 
     // Note: This is the root async context.
-    protected async dispatch(request: Hapi.Request, reply: Hapi.IReply, route: ActionRoute) {
+    protected async dispatch(request: Hapi.Request, reply: Hapi.Base_Reply, route: ActionRoute) {
         
         const childContainer = await this.app.suite.bootChild();
 
@@ -99,7 +99,7 @@ export class Dispatcher {
         await action(request, reply, route);
     }
 
-    protected error(error: any, request: Hapi.Request, reply: Hapi.IReply, route: Route) {
+    protected error(error: any, request: Hapi.Request, reply: Hapi.Base_Reply, route: Route) {
 
         if(_.isError(error)) {
 

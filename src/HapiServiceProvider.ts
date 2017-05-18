@@ -1,8 +1,10 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
+import "./Extensions";
+import { symbols } from "protoculture";
 import { hapiSymbols } from "./index";
 import { interfaces } from "inversify";
-import { ServiceProvider } from "protoculture";
+import { ServiceProvider, Environment } from "protoculture";
 import { RouteType } from "./Route";
 import { Dispatcher } from "./Dispatcher";
 import { HapiApp } from "./HapiApp";
@@ -14,10 +16,10 @@ export class HapiServiceProvider extends ServiceProvider {
 
         this.suite.container.bind(hapiSymbols.Server)
             .toDynamicValue((context) => {
-                
+
                 const server = this.createServer(context);
-                this.configurePlugins(server, context);
-                this.configureConnections(server, context);
+                this.initializePlugins(server, context);
+                this.initializeConnections(server, context);
 
                 return server;
             })
@@ -28,26 +30,9 @@ export class HapiServiceProvider extends ServiceProvider {
         this.bindConstructorParameter([hapiSymbols.Route], HapiApp, 1);
     }
 
-    protected bindRoutes(routes: RouteType[]) {
-
-        _.each(routes, (route) => this.bindRoute(route));
-    }
-
-    protected bindRoute(route: RouteType) {
-
-        this.suite.container.bind(hapiSymbols.Route)
-            .toConstantValue(route);
-    }
-
-    protected bindConnection(connection: Hapi.IServerConnectionOptions) {
-
-        this.suite.container.bind(hapiSymbols.ServerConnectionOptions)
-            .toConstantValue(connection);
-    }
-
     private createServer(context: interfaces.Context) {
 
-        const configurationOptions: Hapi.IServerOptions = {
+        const configurationOptions: Hapi.ServerOptions = {
             connections: {
                 router: {
                     stripTrailingSlash: true,
@@ -58,7 +43,7 @@ export class HapiServiceProvider extends ServiceProvider {
 
         try {
             
-            const configuredOptions = context.container.get<Hapi.IServerOptions>(hapiSymbols.ServerOptions);
+            const configuredOptions = context.container.get<Hapi.ServerOptions>(hapiSymbols.ServerOptions);
             _.assign(configurationOptions, configuredOptions);
         }
         catch(error) {
@@ -68,14 +53,30 @@ export class HapiServiceProvider extends ServiceProvider {
         return new Hapi.Server(configurationOptions);
     }
 
-    private configureConnections(server: Hapi.Server, context: interfaces.Context) {
+    private initializeConnections(server: Hapi.Server, context: interfaces.Context) {
 
-        const connections = context.container.getAll<Hapi.IServerConnectionOptions>(hapiSymbols.ServerConnectionOptions);
+        let connections: Hapi.ServerConnectionOptions[];
+
+        try {
+            
+            connections = context.container.getAll<Hapi.ServerConnectionOptions>(hapiSymbols.ServerConnectionOptions);
+        }
+        catch(error) {
+
+            const environment = context.container.get<Environment>(symbols.Environment);
+
+            connections = [
+                {
+                    host: environment.host,
+                    port: environment.port,
+                }
+            ];
+        }
         
         _.each(connections, (connection) => server.connection(connection));
     }
 
-    private configurePlugins(server: Hapi.Server, context: interfaces.Context) {
+    private initializePlugins(server: Hapi.Server, context: interfaces.Context) {
 
         try {
             

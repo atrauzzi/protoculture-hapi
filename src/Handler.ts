@@ -4,5 +4,5 @@ import { Route } from "./Route";
 
 export interface Handler {
 
-    (request: Hapi.Request, reply: Hapi.IReply, route: Route): Promise<void>;
+    (request: Hapi.Request, reply: Hapi.Base_Reply, route: Route): Promise<void>;
 }
