@@ -1,4 +1,5 @@
-export * from "./Extensions";
+import "./Extensions";
+
 
 export { HapiServiceProvider } from "./HapiServiceProvider";
 export { InertServiceProvider } from "./InertServiceProvider";
