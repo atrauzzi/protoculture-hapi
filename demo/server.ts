@@ -1,6 +1,5 @@
 #!/usr/bin/env ts-node
 import * as Hapi from "hapi";
-import "../src/Extensions";
 import { ServiceProvider, StaticServiceProvider, BaseApp, Suite, ConsoleServiceProvider } from "protoculture";
 import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../src/index";
 

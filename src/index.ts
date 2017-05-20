@@ -1,3 +1,5 @@
+import "./Extensions";
+
 export { HapiServiceProvider } from "./HapiServiceProvider";
 export { InertServiceProvider } from "./InertServiceProvider";
 export { RouteType, Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
