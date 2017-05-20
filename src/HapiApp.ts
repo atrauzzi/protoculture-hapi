@@ -33,12 +33,17 @@ export class HapiApp implements App {
         this.server.on("request-error", (request: Hapi.Request, error: Error) => this.logError(request, error));
         this.server.on("request", (request: Hapi.Request, event: Event) => this.logRequest(request, event));
         this.server.on("response", (request: Hapi.Request) => this.logResponse(request));
+
+        this.dispatcher.registerRoutes(this.routes);
     }
 
     public async run(): Promise<void> {
         
-        this.dispatcher.registerRoutes(this.routes);
+        const connections = _.map(this.server.connections, (connection) =>
+            ` - ${connection.info.host}:${connection.info.port}`);
 
+        this.log("Listening via: \n" + connections.join("\n"));
+        
         this.server.start();
     }
 
