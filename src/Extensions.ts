@@ -20,7 +20,7 @@ declare module "protoculture/lib/ServiceProvider" {
 
     export interface ServiceProvider {
 
-        configureConnection(connection: Hapi.ServerConnectionOptions): void;
+        configureConnection(connectionFactory: ConnectionFactory): void;
     
         configureRoutes(routes: RouteType[]): void;
 
