@@ -9,7 +9,7 @@ const hapiDemoSymbols = {
 }
 
 export class HelloController {
-    
+
     // Controllers can be async now!
     public async sayHello(request: Hapi.Request, reply: Hapi.Base_Reply, route: Route) {
 
@@ -22,7 +22,16 @@ class HapiDemoServiceProvider extends ServiceProvider {
     public async boot() {
 
         this.configureConnection(() => {
-            
+
+            return {
+                host: "0.0.0.0",
+                port: 2112,
+            };
+        });
+
+        // Duplicate connections don't matter!
+        this.configureConnection(() => {
+
             return {
                 host: "0.0.0.0",
                 port: 2112,
@@ -79,4 +88,4 @@ class HapiDemoSuite extends Suite {
 //
 // And this is how we start it!
 const suite = new HapiDemoSuite();
-suite.run().catch((error) => console.error(error));
+suite.run().catch(console.error);

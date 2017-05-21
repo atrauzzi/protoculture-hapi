@@ -42,12 +42,12 @@ export class HapiServiceProvider extends ServiceProvider {
         };
 
         try {
-            
+
             const configuredOptions = context.container.get<Hapi.ServerOptions>(hapiSymbols.ServerOptions);
             _.assign(configurationOptions, configuredOptions);
         }
-        catch(error) {
-
+        catch (error) {
+            // Pass
         }
 
         return new Hapi.Server(configurationOptions);
@@ -58,10 +58,10 @@ export class HapiServiceProvider extends ServiceProvider {
         let connections: Hapi.ServerConnectionOptions[];
 
         try {
-            
+
             connections = context.container.getAll<Hapi.ServerConnectionOptions>(hapiSymbols.ServerConnectionOptions);
         }
-        catch(error) {
+        catch (error) {
 
             const environment = context.container.get<Environment>(symbols.Environment);
 
@@ -72,19 +72,22 @@ export class HapiServiceProvider extends ServiceProvider {
                 }
             ];
         }
-        
-        _.each(connections, (connection) => server.connection(connection));
+
+        _.chain(connections)
+            .uniqBy(_.isEqual)
+            .each((connection) => server.connection(connection))
+            .value();
     }
 
     private initializePlugins(server: Hapi.Server, context: interfaces.Context) {
 
         try {
-            
-            const plugins = context.container.getAll<any>(hapiSymbols.Plugin);
-            _.each(plugins, (plugin) => server.register(plugin))
-        }
-        catch(error) {
 
+            const plugins = context.container.getAll<any>(hapiSymbols.Plugin);
+            _.each(plugins, (plugin) => server.register(plugin));
+        }
+        catch (error) {
+            // Pass
         }
     }
 }

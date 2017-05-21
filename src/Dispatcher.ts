@@ -90,7 +90,7 @@ export class Dispatcher {
 
     // Note: This is the root async context.
     protected async dispatch(request: Hapi.Request, reply: Hapi.Base_Reply, route: ActionRoute) {
-        
+
         const childContainer = await this.app.suite.bootChild();
 
         const actionTarget = childContainer.get(route.actionSymbol);
