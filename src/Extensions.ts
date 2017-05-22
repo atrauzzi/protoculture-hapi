@@ -21,7 +21,7 @@ declare module "protoculture/lib/ServiceProvider" {
     export interface ServiceProvider {
 
         configureConnection(connectionFactory: ConnectionFactory): void;
-    
+
         configureRoutes(routes: RouteType[]): void;
 
         configureRoute(route: RouteType): void;
