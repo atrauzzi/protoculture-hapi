@@ -4,7 +4,7 @@ import "./Extensions";
 import { symbols } from "protoculture";
 import { hapiSymbols } from "./index";
 import { interfaces } from "inversify";
-import { ServiceProvider, Environment } from "protoculture";
+import { ServiceProvider } from "protoculture";
 import { RouteType } from "./Route";
 import { Dispatcher } from "./Dispatcher";
 import { HapiApp } from "./HapiApp";
@@ -63,12 +63,10 @@ export class HapiServiceProvider extends ServiceProvider {
         }
         catch (error) {
 
-            const environment = context.container.get<Environment>(symbols.Environment);
-
             connections = [
                 {
-                    host: environment.host,
-                    port: environment.port,
+                    host: "0.0.0.0",
+                    port: 80,
                 }
             ];
         }
