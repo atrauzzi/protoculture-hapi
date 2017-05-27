@@ -6,16 +6,6 @@ import { RouteType } from "./Route";
 import { ServiceProvider } from "protoculture/lib/ServiceProvider";
 
 
-declare module "protoculture/lib/Environment" {
-
-    export interface Environment {
-
-        host: string;
-
-        port: number;
-    }
-}
-
 declare module "protoculture/lib/ServiceProvider" {
 
     export interface ServiceProvider {
