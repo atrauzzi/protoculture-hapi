@@ -7,7 +7,7 @@ export class InertServiceProvider extends ServiceProvider {
 
     public async boot() {
 
-        this.suite.container.bind(hapiSymbols.Plugin)
+        this.bundle.container.bind(hapiSymbols.Plugin)
             .toConstantValue(Inert);
     }
 }

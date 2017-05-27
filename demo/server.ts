@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import * as Hapi from "hapi";
-import { ServiceProvider, StaticServiceProvider, BaseApp, Suite, ConsoleServiceProvider } from "protoculture";
+import { ServiceProvider, StaticServiceProvider, BaseApp, Bundle, ConsoleServiceProvider } from "protoculture";
 import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../src/index";
 
 
@@ -69,8 +69,8 @@ class HapiDemoServiceProvider extends ServiceProvider {
 }
 
 //
-// Here's a suite that acts as the composition root for the entire solution.
-class HapiDemoSuite extends Suite {
+// Here's a bundle that acts as the composition root for the entire solution.
+class HapiDemoBundle extends Bundle {
 
     public name = "hapi-demo";
 
@@ -87,5 +87,5 @@ class HapiDemoSuite extends Suite {
 
 //
 // And this is how we start it!
-const suite = new HapiDemoSuite();
-suite.run().catch(console.error);
+const bundle = new HapiDemoBundle();
+bundle.run().catch(console.error);

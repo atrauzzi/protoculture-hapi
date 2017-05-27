@@ -14,7 +14,7 @@ export class HapiServiceProvider extends ServiceProvider {
 
     public async boot() {
 
-        this.suite.container.bind(hapiSymbols.Server)
+        this.bundle.container.bind(hapiSymbols.Server)
             .toDynamicValue((context) => {
 
                 const server = this.createServer(context);

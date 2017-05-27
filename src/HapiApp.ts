@@ -1,24 +1,24 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
-import { App, Suite, LogLevel } from "protoculture";
+import { App, Bundle, LogLevel } from "protoculture";
 import { Dispatcher } from "./Dispatcher";
 import { Route } from "./Route";
 import { toCommonLogFormat } from "./CommonLogFormatter";
 
 
 export class HapiApp implements App {
-    
+
     public get name() {
 
         return "hapi";
     }
 
     public get working(): boolean {
-        
+
         return true;
     }
 
-    public suite: Suite;
+    public bundle: Bundle;
 
     protected dispatcher: Dispatcher;
 
@@ -38,12 +38,12 @@ export class HapiApp implements App {
     }
 
     public async run(): Promise<void> {
-        
+
         const connections = _.map(this.server.connections, (connection) =>
             ` - ${connection.info.host}:${connection.info.port}`);
 
         this.log("Listening via: \n" + connections.join("\n"));
-        
+
         this.server.start();
     }
 
@@ -64,6 +64,6 @@ export class HapiApp implements App {
 
     protected log(message: any, level?: LogLevel) {
 
-        this.suite.logger.log(message, this, level);
+        this.bundle.logger.log(message, this, level);
     }
 }

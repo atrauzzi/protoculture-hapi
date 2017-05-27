@@ -1,11 +1,11 @@
 import * as Hapi from "hapi";
 
 
-export type RouteType = 
-    Route 
-    | ActionRoute 
-    | DirectoryRoute 
-    | FileRoute 
+export type RouteType =
+    Route
+    | ActionRoute
+    | DirectoryRoute
+    | FileRoute
     | Hapi.RouteConfiguration
 ;
 
@@ -21,7 +21,7 @@ export interface Route {
 
 export interface ActionRoute extends Route {
 
-    path: string;    
+    path: string;
     actionSymbol: symbol;
     actionMethod?: string;
 }
@@ -35,5 +35,5 @@ export interface DirectoryRoute extends Route {
 export interface FileRoute extends Route {
 
     path?: string;
-    file: string;    
+    file: string;
 }

@@ -8,25 +8,25 @@ export function toCommonLogFormat(request: Hapi.Request) {
 
     const method = rawReq.method;
     const path = rawReq.url;
-    const httpProtocol = rawReq["client"]
-        ? rawReq["client"].npnProtocol 
-        : 'HTTP/' + rawReq.httpVersion;
+    const httpProtocol = (rawReq as any).client
+        ? (rawReq as any).client.npnProtocol
+        : "HTTP/" + rawReq.httpVersion;
 
     const clientIp = request.info.remoteAddress;
-    const clientId = '-';
+    const clientId = "-";
     const userid = request.id;
-    const time = '[' + moment().toISOString() + ']';
-    const requestLine = '"' + [method, path, httpProtocol].join(' ') + '"';
+    const time = "[" + moment().toISOString() + "]";
+    const requestLine = '"' + [method, path, httpProtocol].join(" ") + '"';
     const statusCode = request.response.statusCode;
-    const objectSize = '-';
+    const objectSize = "-";
 
     return [
-        clientIp, 
-        clientId, 
-        userid, 
-        time, 
-        requestLine, 
-        statusCode, 
+        clientIp,
+        clientId,
+        userid,
+        time,
+        requestLine,
+        statusCode,
         objectSize
-    ].join(' ');
-};
+    ].join(" ");
+}

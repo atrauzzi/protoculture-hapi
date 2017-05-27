@@ -32,9 +32,9 @@ export type ConnectionFactory = (container: interfaces.Container) => Hapi.Server
 
 ServiceProvider.prototype.configureConnection = function (connectionFactory: ConnectionFactory) {
 
-    const connection = connectionFactory(this.suite.container);
+    const connection = connectionFactory(this.bundle.container);
 
-    this.suite.container.bind(hapiSymbols.ServerConnectionOptions)
+    this.bundle.container.bind(hapiSymbols.ServerConnectionOptions)
         .toConstantValue(connection);
 };
 
@@ -45,6 +45,6 @@ ServiceProvider.prototype.configureRoutes = function (routes: RouteType[]) {
 
 ServiceProvider.prototype.configureRoute = function (route: RouteType) {
 
-    this.suite.container.bind(hapiSymbols.Route)
+    this.bundle.container.bind(hapiSymbols.Route)
         .toConstantValue(route);
 };

@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
-import { Suite, App, LogLevel } from "protoculture";
+import { Bundle, App, LogLevel } from "protoculture";
 import { Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
 import { Handler } from "./Handler";
 
@@ -21,16 +21,16 @@ export class Dispatcher {
 
     public registerRoute(route: Route | Hapi.RouteConfiguration) {
 
-        if(_.has(route, "actionSymbol")) {
+        if (_.has(route, "actionSymbol")) {
 
             this.registerActionRoute(route as ActionRoute);
         }
-        else if(_.has(route, "directory")) {
+        else if (_.has(route, "directory")) {
 
             this.registerDirectoryRoute(route as DirectoryRoute);
         }
-        else if(_.has(route, "file")) {
-            
+        else if (_.has(route, "file")) {
+
             this.registerFileRoute(route as FileRoute);
         }
         else {
@@ -43,6 +43,7 @@ export class Dispatcher {
 
         // Note: Apparently you can't use fat arrow functions for handlers in hapi.
         const dispatcher = this;
+        // tslint:disable-next-line:only-arrow-functions
         const actionHandler = function (request: Hapi.Request, reply: Hapi.Base_Reply) {
 
             dispatcher
@@ -91,7 +92,7 @@ export class Dispatcher {
     // Note: This is the root async context.
     protected async dispatch(request: Hapi.Request, reply: Hapi.Base_Reply, route: ActionRoute) {
 
-        const childContainer = await this.app.suite.bootChild();
+        const childContainer = await this.app.bundle.bootChild();
 
         const actionTarget = childContainer.get(route.actionSymbol);
         const action: Handler = actionTarget[route.actionMethod] || actionTarget;
@@ -101,7 +102,7 @@ export class Dispatcher {
 
     protected error(error: any, request: Hapi.Request, reply: Hapi.Base_Reply, route: Route) {
 
-        if(_.isError(error)) {
+        if (_.isError(error)) {
 
             const {name, message, stack} = error;
             request.log(["error", "uncaught"], {name, message, stack});
