@@ -1,8 +1,9 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
 import { App, Bundle, LogLevel } from "protoculture";
-import { Dispatcher } from "./Dispatcher";
 import { Route } from "./Route";
+import { Registrar } from "./Registrar";
+import { Dispatcher } from "./Dispatcher";
 import { toCommonLogFormat } from "./CommonLogFormatter";
 
 
@@ -20,6 +21,8 @@ export class HapiApp implements App {
 
     public bundle: Bundle;
 
+    protected registrar: Registrar;
+
     protected dispatcher: Dispatcher;
 
     public constructor(
@@ -27,20 +30,20 @@ export class HapiApp implements App {
         protected routes: Route[],
     ) {
 
-        this.dispatcher = new Dispatcher(this, this.server);
 
         this.server.on("log", (request: Hapi.Request, event: Event) => this.log(event, LogLevel.Info));
         this.server.on("request-error", (request: Hapi.Request, error: Error) => this.logError(request, error));
         this.server.on("request", (request: Hapi.Request, event: Event) => this.logRequest(request, event));
         this.server.on("response", (request: Hapi.Request) => this.logResponse(request));
-
-        this.dispatcher.registerRoutes(this.routes);
     }
 
     public async run(): Promise<void> {
 
-        const connections = _.map(this.server.connections, (connection) =>
-            ` - ${connection.info.host}:${connection.info.port}`);
+        this.dispatcher = new Dispatcher(this);
+        this.registrar = new Registrar(this.bundle.container, this.server, this.dispatcher);
+        this.registrar.registerRoutes(this.routes);
+
+        const connections = _.map(this.server.connections, (connection) => ` - ${connection.info.host}:${connection.info.port}`);
 
         this.log("Listening via: \n" + connections.join("\n"));
 

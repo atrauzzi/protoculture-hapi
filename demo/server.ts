@@ -4,9 +4,7 @@ import { ServiceProvider, StaticServiceProvider, BaseApp, Bundle, ConsoleService
 import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../src/index";
 
 
-const hapiDemoSymbols = {
-    HelloController: Symbol("hello"),
-}
+// tslint:disable:max-classes-per-file
 
 export class HelloController {
 
@@ -38,9 +36,6 @@ class HapiDemoServiceProvider extends ServiceProvider {
             };
         });
 
-        this.makeInjectable(HelloController);
-        this.bindConstructor(hapiDemoSymbols.HelloController, HelloController);
-
         // Routes obviously don't have to be inline, they can come from other modules still!
         this.configureRoutes([
             // Static routes, for when you just can't get enough.
@@ -51,8 +46,7 @@ class HapiDemoServiceProvider extends ServiceProvider {
             {
                 path: "/say-hello",
                 method: "GET",
-                // Can be a function or a class
-                actionSymbol: hapiDemoSymbols.HelloController,
+                actionObject: HelloController,
                 // If a class is used, the method to invoke
                 actionMethod: "sayHello",
             },
@@ -63,8 +57,6 @@ class HapiDemoServiceProvider extends ServiceProvider {
                 file: "protoculture.png",
             }
         ]);
-
-        super.boot();
     }
 }
 
@@ -78,9 +70,9 @@ class HapiDemoBundle extends Bundle {
 
         return [
             ConsoleServiceProvider,
+            HapiDemoServiceProvider,
             HapiServiceProvider,
             InertServiceProvider,
-            HapiDemoServiceProvider,
         ];
     }
 }
