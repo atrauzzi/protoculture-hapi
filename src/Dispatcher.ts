@@ -17,7 +17,8 @@ export class Dispatcher {
         const childContainer = await this.app.bundle.bootChild();
 
         const actionTarget = childContainer.get(symbol);
-        const action: Handler = actionTarget[route.actionMethod] || actionTarget;
+        const actionMethod = route.actionMethod || "action";
+        const action: Handler = actionTarget[actionMethod] || actionTarget;
 
         try {
 
