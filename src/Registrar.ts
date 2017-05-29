@@ -3,7 +3,7 @@ import * as Hapi from "hapi";
 import { App } from "protoculture/lib";
 import { Dispatcher } from "./Dispatcher";
 import { Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
-import { decorate, injectable, Container } from "inversify";
+import { decorate, injectable, Container, multiInject, inject } from "inversify";
 
 
 export class Registrar {
@@ -72,7 +72,27 @@ export class Registrar {
             .to(route.actionObject)
             .inTransientScope();
 
+        if (!_.isEmpty(route.injections)) {
+
+            this.bindConstructorParameters(route.actionObject, route.injections);
+        }
+
         return actionSymbol;
+    }
+
+    protected bindConstructorParameters(staticType: any, injections: any[]) {
+
+        injections.forEach((injection, position) => {
+
+            if (_.isArray(injection)) {
+
+                decorate(multiInject((injection as symbol[])[0]), staticType, position);
+            }
+            else {
+
+                decorate(inject(injection as symbol), staticType, position);
+            }
+        });
     }
 
     protected registerDirectoryRoute(route: DirectoryRoute) {

@@ -24,7 +24,7 @@ export interface ActionRoute extends Route {
     path: string;
     actionObject: { new(...args: any[]): any };
     actionMethod?: string;
-    inject?: symbol[];
+    injections?: symbol[];
 }
 
 export interface DirectoryRoute extends Route {

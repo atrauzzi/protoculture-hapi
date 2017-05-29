@@ -30,7 +30,6 @@ export class HapiApp implements App {
         protected routes: Route[],
     ) {
 
-
         this.server.on("log", (request: Hapi.Request, event: Event) => this.log(event, LogLevel.Info));
         this.server.on("request-error", (request: Hapi.Request, error: Error) => this.logError(request, error));
         this.server.on("request", (request: Hapi.Request, event: Event) => this.logRequest(request, event));
