@@ -40,6 +40,7 @@ export class HapiApp implements App {
 
         this.dispatcher = new Dispatcher(this);
         this.registrar = new Registrar(this.bundle.container, this.server, this.dispatcher);
+
         this.registrar.registerRoutes(this.routes);
 
         const connections = _.map(this.server.connections, (connection) => ` - ${connection.info.host}:${connection.info.port}`);

@@ -1,7 +1,13 @@
 #!/usr/bin/env ts-node
 import * as Hapi from "hapi";
 import { ServiceProvider, StaticServiceProvider, BaseApp, Bundle, ConsoleServiceProvider } from "protoculture";
-import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../src/index";
+import {
+    InertServiceProvider,
+    HapiServiceProvider,
+    Route,
+    RouteType,
+    action,
+} from "../src/index";
 
 
 // tslint:disable:max-classes-per-file
@@ -9,6 +15,7 @@ import { InertServiceProvider, HapiServiceProvider, Route, RouteType } from "../
 export class HelloController {
 
     // Controllers can be async now!
+    @action("/another-way-to-hello")
     public async sayHello(request: Hapi.Request, reply: Hapi.Base_Reply, route: Route) {
 
         reply("Yes sir I like it!");

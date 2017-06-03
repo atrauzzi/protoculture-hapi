@@ -12,6 +12,8 @@ import { HapiApp } from "./HapiApp";
 
 export class HapiServiceProvider extends ServiceProvider {
 
+    public static readonly routedTargets: any[] = [];
+
     public async boot() {
 
         this.bundle.container.bind(hapiSymbols.Server)
@@ -28,6 +30,8 @@ export class HapiServiceProvider extends ServiceProvider {
         this.bindApp(HapiApp);
         this.bindConstructorParameter(hapiSymbols.Server, HapiApp, 0);
         this.bindConstructorParameter([hapiSymbols.Route], HapiApp, 1);
+
+        this.configureDecoratedRoutes();
     }
 
     private createServer(context: interfaces.Context) {
@@ -87,5 +91,13 @@ export class HapiServiceProvider extends ServiceProvider {
         catch (error) {
             // Pass
         }
+    }
+
+    private configureDecoratedRoutes() {
+
+        const routes = HapiServiceProvider.routedTargets.map((target) =>
+            Reflect.getMetadata("protoculture-hapi:route", target));
+
+        this.configureRoutes(routes);
     }
 }

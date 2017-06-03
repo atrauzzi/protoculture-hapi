@@ -65,7 +65,14 @@ export class Registrar {
 
         const actionSymbol = Symbol(`${route.method}#${route.path}`);
 
-        decorate(injectable(), route.actionObject);
+        try {
+
+            decorate(injectable(), route.actionObject);
+        }
+        catch (error) {
+
+            // Don't care.
+        }
 
         const bind = this.container
             .bind(actionSymbol)

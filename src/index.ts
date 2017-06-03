@@ -13,3 +13,5 @@ export const hapiSymbols = {
     Route: Symbol("Route"),
     Plugin: Symbol("Plugin"),
 };
+
+export { action } from "./Decorator/Action";
