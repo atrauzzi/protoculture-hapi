@@ -24,7 +24,11 @@ export function action(path: string, configuration: ActionDecoratorConfiguration
             actionMethod: key,
         };
 
-        Reflect.defineMetadata("protoculture-hapi:route", route, constructor);
+        const routes = Reflect.getMetadata(`protoculture-hapi:routes`, constructor) || [];
+
+        routes.push(route);
+
+        Reflect.defineMetadata(`protoculture-hapi:routes`, routes, constructor);
 
         // ToDo: https://github.com/rbuckton/reflect-metadata/issues/70
         HapiServiceProvider.routedTargets.push(constructor);
