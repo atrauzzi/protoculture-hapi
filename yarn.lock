@@ -45,6 +45,10 @@
   dependencies:
     "@types/boom" "*"
 
+"@types/chance@^0.7.33":
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/@types/chance/-/chance-0.7.33.tgz#9666ae5c8f602a14a67e5b608dabf1a7853a1e28"
+
 "@types/hapi@*", "@types/hapi@^16.0.4":
   version "16.1.2"
   resolved "https://registry.yarnpkg.com/@types/hapi/-/hapi-16.1.2.tgz#e782b399a11ef8934c3de3ab07aae9fb53cb0968"
@@ -329,6 +333,10 @@ chalk@^1.1.1:
     has-ansi "^2.0.0"
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
+
+chance@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/chance/-/chance-1.0.9.tgz#85ae52c145c433d69f6f1eff24f056012b77a60f"
 
 co@^4.6.0:
   version "4.6.0"

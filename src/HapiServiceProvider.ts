@@ -96,7 +96,7 @@ export class HapiServiceProvider extends ServiceProvider {
     private configureDecoratedRoutes() {
 
         const routes = _.chain(HapiServiceProvider.routedTargets)
-            .map((target) => Reflect.getMetadata("protoculture-hapi:routes", target))
+            .map((target) => _.values(Reflect.getMetadata("protoculture-hapi:routes", target)))
             .flatten()
             .value();
 

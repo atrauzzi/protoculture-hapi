@@ -21,6 +21,7 @@ export interface Route {
 
 export interface ActionRoute extends Route {
 
+    name?: string;
     path: string;
     actionObject: { new(...args: any[]): any };
     actionMethod?: string;
