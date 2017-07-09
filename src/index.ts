@@ -7,11 +7,12 @@ export { RouteType, Route, ActionRoute, DirectoryRoute, FileRoute } from "./Rout
 export { Handler } from "./Handler";
 
 export const hapiSymbols = {
-    ServerOptions: Symbol("ServerOptions"),
-    ServerConnectionOptions: Symbol("ServerConnectionOptions"),
-    Server: Symbol("Server"),
-    Route: Symbol("Route"),
-    Plugin: Symbol("Plugin"),
+    ServerOptions: Symbol("HapiServerOptions"),
+    ServerConnectionOptions: Symbol("HapiServerConnectionOptions"),
+    Server: Symbol("HapiServer"),
+    Route: Symbol("HapiRoute"),
+    Cache: Symbol("HapiCache"),
+    Plugin: Symbol("HapiPlugin"),
 };
 
 export { action } from "./Decorator/Action";

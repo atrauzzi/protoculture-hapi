@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
+import * as Catbox from "catbox";
 import "./Extensions";
 import { symbols } from "protoculture";
 import { hapiSymbols } from "./index";
@@ -42,8 +43,7 @@ export class HapiServiceProvider extends ServiceProvider {
                     stripTrailingSlash: true,
                     isCaseSensitive: true,
                 }
-            },
-            cache: [],
+            }
         };
 
         try {
@@ -52,6 +52,16 @@ export class HapiServiceProvider extends ServiceProvider {
             _.assign(configurationOptions, configuredOptions);
         }
         catch (error) {
+
+            // Pass
+        }
+
+        try {
+
+            configurationOptions.cache = context.container.getAll(hapiSymbols.Cache);
+        }
+        catch (error) {
+
             // Pass
         }
 
