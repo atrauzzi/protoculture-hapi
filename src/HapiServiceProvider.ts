@@ -42,7 +42,8 @@ export class HapiServiceProvider extends ServiceProvider {
                     stripTrailingSlash: true,
                     isCaseSensitive: true,
                 }
-            }
+            },
+            cache: [],
         };
 
         try {
