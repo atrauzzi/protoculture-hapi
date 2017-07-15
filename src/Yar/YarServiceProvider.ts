@@ -1,5 +1,5 @@
 import { PluginRegistrationObject } from "hapi";
-import { hapiSymbols } from "./index";
+import { hapiSymbols } from "../index";
 import { ServiceProvider } from "protoculture";
 import * as yar from "yar";
 

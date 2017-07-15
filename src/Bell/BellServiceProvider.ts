@@ -1,6 +1,6 @@
 import * as bell from "bell";
 import { ServiceProvider } from "protoculture";
-import { hapiSymbols } from "./index";
+import { hapiSymbols } from "../index";
 
 
 export class BellServiceProvider extends ServiceProvider {

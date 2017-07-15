@@ -1,5 +1,5 @@
 import * as Inert from "inert";
-import { hapiSymbols } from "./index";
+import { hapiSymbols } from "../index";
 import { ServiceProvider } from "protoculture";
 
 

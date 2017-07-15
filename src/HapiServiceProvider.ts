@@ -9,7 +9,7 @@ import { ServiceProvider } from "protoculture";
 import { RouteType } from "./Route";
 import { Dispatcher } from "./Dispatcher";
 import { HapiApp } from "./HapiApp";
-import { AuthStrategy } from "./AuthStrategy";
+import { AuthStrategy } from "./Bell/AuthStrategy";
 
 
 export class HapiServiceProvider extends ServiceProvider {

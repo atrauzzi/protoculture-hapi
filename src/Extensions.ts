@@ -5,7 +5,7 @@ import { ServiceProvider } from "protoculture";
 import { YarOptions } from "yar";
 import { hapiSymbols } from "./index";
 import { RouteType } from "./Route";
-import { AuthStrategy } from "./AuthStrategy";
+import { AuthStrategy } from "./Bell/AuthStrategy";
 
 
 declare module "protoculture/lib/ServiceProvider" {
