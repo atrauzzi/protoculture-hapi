@@ -3,6 +3,7 @@ import "./Extensions";
 
 export { HapiServiceProvider } from "./HapiServiceProvider";
 export { InertServiceProvider } from "./InertServiceProvider";
+export { YarServiceProvider } from "./YarServiceProvider";
 export { RouteType, Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
 export { Handler } from "./Handler";
 
