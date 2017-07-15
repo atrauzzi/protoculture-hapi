@@ -21,8 +21,8 @@ export class HapiServiceProvider extends ServiceProvider {
             .toDynamicValue((context) => {
 
                 const server = this.createServer(context);
-                this.initializePlugins(server, context);
                 this.initializeConnections(server, context);
+                this.initializePlugins(server, context);
 
                 return server;
             })
