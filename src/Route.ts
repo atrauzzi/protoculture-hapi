@@ -23,6 +23,7 @@ export interface ActionRoute extends Route {
 
     name?: string;
     path: string;
+    config?: Hapi.RouteAdditionalConfigurationOptions;
     actionObject: { new(...args: any[]): any };
     actionMethod?: string;
     injections?: symbol[];

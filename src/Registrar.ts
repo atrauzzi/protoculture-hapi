@@ -56,6 +56,7 @@ export class Registrar {
         this.registerHapiRoute({
             path: route.path,
             method: route.method || "GET",
+            config: route.config,
             // Note: Keeping this closure as lightweight as possible.
             handler: actionHandler,
         });
