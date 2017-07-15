@@ -15,6 +15,15 @@ community maintained typing definitions, hapi seems like a sure bet!
 Most of what this library offers sits on top of hapi and as such, I make every effort to ensure the standard hapi documentation continues to 
 apply.  Hapi offers a lot already, so where possible, protoculture-hapi integrates - but everywhere else, it stays out of the way.
 
+#### Service Providers
+Service providers are included for the following functionality (packages):
+
+ - Static file hosting ([Inert](https://github.com/hapijs/inert))
+ - Sessions ([Yar](https://github.com/hapijs/yar))
+ - Third party authentication ([Bell](https://github.com/hapijs/bell))
+
+ These abstractions are typical for most web projects, and the overhead of separate libraries maybe doesn't quite make sense for them yet.  It's all opt-in via the service providers, so rest assured you won't incur overhead at runtime for anything you don't use.
+
 #### Dependency Injection
 Like many pure JS libraries, hapi does not natively feature any kind of dependency injection.  The nice thing is that hapi is so well factored, 
 setting up dependency injection is straightforward.
