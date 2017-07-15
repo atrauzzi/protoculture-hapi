@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
+import { YarOptions } from "yar";
 import { interfaces } from "inversify";
 import { hapiSymbols } from "./index";
 import { RouteType } from "./Route";
@@ -15,6 +16,8 @@ declare module "protoculture/lib/ServiceProvider" {
         configureRoutes(routes: RouteType[]): void;
 
         configureRoute(route: RouteType): void;
+
+        configureSession(options: YarOptions): void;
     }
 }
 
@@ -37,4 +40,10 @@ ServiceProvider.prototype.configureRoute = function (route: RouteType) {
 
     this.bundle.container.bind(hapiSymbols.Route)
         .toConstantValue(route);
+};
+
+ServiceProvider.prototype.configureSession = function (options: YarOptions) {
+
+    this.bundle.container.bind(hapiSymbols.SessionOptions)
+        .toConstantValue(options);
 };

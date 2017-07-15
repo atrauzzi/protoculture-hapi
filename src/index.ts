@@ -9,6 +9,7 @@ export { Handler } from "./Handler";
 export const hapiSymbols = {
     ServerOptions: Symbol("HapiServerOptions"),
     ServerConnectionOptions: Symbol("HapiServerConnectionOptions"),
+    SessionOptions: Symbol("HapiSessionOptions"),
     Server: Symbol("HapiServer"),
     Route: Symbol("HapiRoute"),
     Cache: Symbol("HapiCache"),

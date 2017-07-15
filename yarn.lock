@@ -1865,7 +1865,7 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
-uuid@^3.0.0:
+uuid@3.x.x, uuid@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
@@ -1932,6 +1932,14 @@ xtend@^4.0.0:
 yallist@^2.0.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
+
+yar@^8.1.2:
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/yar/-/yar-8.1.2.tgz#302912c2e01d0f3be1bf3ff3b5d3d1e215530700"
+  dependencies:
+    hoek "4.x.x"
+    statehood "5.x.x"
+    uuid "3.x.x"
 
 yn@^2.0.0:
   version "2.0.0"
