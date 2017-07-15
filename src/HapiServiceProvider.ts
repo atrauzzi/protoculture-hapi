@@ -112,7 +112,7 @@ export class HapiServiceProvider extends ServiceProvider {
         try {
 
             const strategies = context.container.getAll<AuthStrategy>(hapiSymbols.AuthStrategy);
-            _.each(strategies, (strategy) => server.auth.strategy(strategy.provider, strategy.scheme, strategy.options));
+            _.each(strategies, (strategy) => server.auth.strategy(strategy.name, strategy.scheme, strategy.options));
         }
         catch (error) {
 

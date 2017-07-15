@@ -1,8 +1,6 @@
-
-
 export interface AuthStrategy<ProviderOptions = any> {
 
-    provider: string;
+    name: string;
     scheme: string;
     options?: ProviderOptions;
 }
