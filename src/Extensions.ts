@@ -1,10 +1,11 @@
 import * as _ from "lodash";
 import * as Hapi from "hapi";
-import { YarOptions } from "yar";
 import { interfaces } from "inversify";
+import { ServiceProvider } from "protoculture";
+import { YarOptions } from "yar";
 import { hapiSymbols } from "./index";
 import { RouteType } from "./Route";
-import { ServiceProvider } from "protoculture/lib/ServiceProvider";
+import { AuthStrategy } from "./AuthStrategy";
 
 
 declare module "protoculture/lib/ServiceProvider" {
@@ -18,6 +19,8 @@ declare module "protoculture/lib/ServiceProvider" {
         configureRoute(route: RouteType): void;
 
         configureSession(options: YarOptions): void;
+
+        configureAuthStrategy(authStrategy: AuthStrategy): void;
     }
 }
 
@@ -46,4 +49,10 @@ ServiceProvider.prototype.configureSession = function (options: YarOptions) {
 
     this.bundle.container.bind(hapiSymbols.SessionOptions)
         .toConstantValue(options);
+};
+
+ServiceProvider.prototype.configureAuthStrategy = function (strategy: AuthStrategy) {
+
+    this.bundle.container.bind(hapiSymbols.AuthStrategy)
+        .toConstantValue(strategy);
 };

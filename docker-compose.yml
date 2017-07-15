@@ -3,8 +3,8 @@ version: '2'
 services:
 
   cli:
-    build: .
+    image: protoculture/tooling
     container_name: protoculture-hapi-cli
 
     volumes:
-      - "./:/protoculture-hapi"
+      - "./:/protoculture"

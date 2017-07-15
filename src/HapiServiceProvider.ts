@@ -9,6 +9,7 @@ import { ServiceProvider } from "protoculture";
 import { RouteType } from "./Route";
 import { Dispatcher } from "./Dispatcher";
 import { HapiApp } from "./HapiApp";
+import { AuthStrategy } from "./AuthStrategy";
 
 
 export class HapiServiceProvider extends ServiceProvider {
@@ -23,6 +24,7 @@ export class HapiServiceProvider extends ServiceProvider {
                 const server = this.createServer(context);
                 this.initializeConnections(server, context);
                 this.initializePlugins(server, context);
+                this.initializeAuthStrategies(server, context);
 
                 return server;
             })
@@ -100,6 +102,20 @@ export class HapiServiceProvider extends ServiceProvider {
             _.each(plugins, (plugin) => server.register(plugin));
         }
         catch (error) {
+
+            // Pass
+        }
+    }
+
+    private initializeAuthStrategies(server: Hapi.Server, context: interfaces.Context) {
+
+        try {
+
+            const strategies = context.container.getAll<AuthStrategy>(hapiSymbols.AuthStrategy);
+            _.each(strategies, (strategy) => server.auth.strategy(strategy.provider, strategy.scheme, strategy.options));
+        }
+        catch (error) {
+
             // Pass
         }
     }
