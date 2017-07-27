@@ -110,26 +110,29 @@ export class HapiServiceProvider extends ServiceProvider {
 
     private initializeAuthStrategies(server: Hapi.Server, context: interfaces.Context) {
 
+        let strategies;
+
         try {
 
-            const strategies = context.container.getAll<AuthStrategy>(hapiSymbols.AuthStrategy);
-            _.each(strategies, (strategyOrFactory) => {
-
-                const strategy = this.resolveOptions(context.container, strategyOrFactory);
-
-                server.auth.strategy(strategy.name, strategy.scheme, strategy.options);
-            });
-
-            const defaultStrategy = context.container.get<string>(hapiSymbols.DefaultAuthStrategy);
-
-            if (defaultStrategy) {
-
-                server.auth.default(defaultStrategy);
-            }
+            strategies = context.container.getAll<AuthStrategy>(hapiSymbols.AuthStrategy);
         }
         catch (error) {
 
             // Pass
+        }
+
+        _.each(strategies, (strategyOrFactory) => {
+
+            const strategy = this.resolveOptions(context.container, strategyOrFactory);
+
+            server.auth.strategy(strategy.name, strategy.scheme, strategy.options);
+        });
+
+        const defaultStrategy = context.container.get<string>(hapiSymbols.DefaultAuthStrategy);
+
+        if (defaultStrategy) {
+
+            server.auth.default(defaultStrategy);
         }
     }
 
