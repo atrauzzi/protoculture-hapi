@@ -5,7 +5,7 @@ import { ServiceProvider } from "protoculture";
 import { YarOptions } from "yar";
 import { hapiSymbols } from "./index";
 import { RouteType } from "./Route";
-import { AuthStrategy } from "./Bell/AuthStrategy";
+import { AuthStrategy } from "./AuthStrategy";
 
 
 declare module "protoculture/lib/ServiceProvider" {
@@ -21,6 +21,8 @@ declare module "protoculture/lib/ServiceProvider" {
         configureSession(options: YarOptions): void;
 
         configureAuthStrategy(authStrategy: AuthStrategy): void;
+
+        configureDefaultAuthStrategy(strategy: string): void;
     }
 }
 
@@ -55,4 +57,11 @@ ServiceProvider.prototype.configureAuthStrategy = function (strategy: AuthStrate
 
     this.bundle.container.bind(hapiSymbols.AuthStrategy)
         .toConstantValue(strategy);
+};
+
+ServiceProvider.prototype.configureDefaultAuthStrategy = function (strategy: string) {
+
+    this.bundle.container.get(hapiSymbols.Server)
+        .auth
+        .default(strategy);
 };

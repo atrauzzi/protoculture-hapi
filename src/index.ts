@@ -1,13 +1,15 @@
 import "./Extensions";
 import "./Bell/Extensions";
 import "./Yar/Extensions";
+import "./AuthJwt/Extensions";
 
 
 export { HapiServiceProvider } from "./HapiServiceProvider";
 export { InertServiceProvider } from "./Inert/InertServiceProvider";
 export { YarServiceProvider } from "./Yar/YarServiceProvider";
 export { BellServiceProvider } from "./Bell/BellServiceProvider";
-export { AuthStrategy } from "./Bell/AuthStrategy";
+export { HapiAuthJwtServiceProvider } from "./AuthJwt/HapiAuthJwtServiceProvider";
+export { AuthStrategy } from "./AuthStrategy";
 export { RouteType, Route, ActionRoute, DirectoryRoute, FileRoute } from "./Route";
 export { Handler } from "./Handler";
 

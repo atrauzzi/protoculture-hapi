@@ -9,7 +9,8 @@ import { ServiceProvider } from "protoculture";
 import { RouteType } from "./Route";
 import { Dispatcher } from "./Dispatcher";
 import { HapiApp } from "./HapiApp";
-import { AuthStrategy } from "./Bell/AuthStrategy";
+import { OptionsOrFactory } from "./OptionsOrFactory";
+import { AuthStrategy, AuthStrategyOptions } from "./AuthStrategy";
 
 
 export class HapiServiceProvider extends ServiceProvider {
@@ -112,7 +113,12 @@ export class HapiServiceProvider extends ServiceProvider {
         try {
 
             const strategies = context.container.getAll<AuthStrategy>(hapiSymbols.AuthStrategy);
-            _.each(strategies, (strategy) => server.auth.strategy(strategy.name, strategy.scheme, strategy.options));
+            _.each(strategies, (strategyOrFactory) => {
+
+                const strategy = this.resolveOptions(context.container, strategyOrFactory);
+
+                server.auth.strategy(strategy.name, strategy.scheme, strategy.options);
+            });
         }
         catch (error) {
 
@@ -128,5 +134,12 @@ export class HapiServiceProvider extends ServiceProvider {
             .value();
 
         this.configureRoutes(routes);
+    }
+
+    private resolveOptions<Options>(container: interfaces.Container, optionsOrFactory: OptionsOrFactory<Options>): Options {
+
+        return _.isFunction(optionsOrFactory)
+            ? optionsOrFactory(container)
+            : optionsOrFactory as Options;
     }
 }
