@@ -22,6 +22,7 @@ export const hapiSymbols = {
     Cache: Symbol("HapiCache"),
     Plugin: Symbol("HapiPlugin"),
     AuthStrategy: Symbol("AuthStrategy"),
+    DefaultAuthStrategy: Symbol("DefaultAuthStrategy"),
 };
 
 export { action } from "./Decorator/Action";

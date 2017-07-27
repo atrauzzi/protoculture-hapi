@@ -61,7 +61,6 @@ ServiceProvider.prototype.configureAuthStrategy = function (strategy: AuthStrate
 
 ServiceProvider.prototype.configureDefaultAuthStrategy = function (strategy: string) {
 
-    this.bundle.container.get(hapiSymbols.Server)
-        .auth
-        .default(strategy);
+    this.bundle.container.bind(hapiSymbols.DefaultAuthStrategy)
+        .toConstantValue(strategy);
 };
