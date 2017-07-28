@@ -128,11 +128,15 @@ export class HapiServiceProvider extends ServiceProvider {
             server.auth.strategy(strategy.name, strategy.scheme, strategy.options);
         });
 
-        const defaultStrategy = context.container.get<string>(hapiSymbols.DefaultAuthStrategy);
+        try {
 
-        if (defaultStrategy) {
+            const defaultStrategy = context.container.get<string>(hapiSymbols.DefaultAuthStrategy);
 
             server.auth.default(defaultStrategy);
+        }
+        catch (error) {
+
+            // Pass
         }
     }
 
